@@ -6,319 +6,295 @@
 <title>Für Dich ❤️</title>
 
 <style>
-  :root{
-    --bg1:#07070d;
-    --bg2:#0d0b18;
-    --card:rgba(255,255,255,.06);
-    --border:rgba(255,255,255,.14);
-    --text:rgba(255,255,255,.92);
-    --muted:rgba(255,255,255,.72);
-    --accent:#ff4d6d;
-    --accent2:#6c63ff;
-  }
+:root{
+  --pink:#ff4fa3;
+  --pink2:#ff9acb;
+  --bg:#090012;
+  --card:rgba(255,255,255,.10);
+  --border:rgba(255,192,223,.25);
+  --text:rgba(255,255,255,.95);
+  --muted:rgba(255,255,255,.75);
+  --glow: 0 0 18px rgba(255,79,163,.45), 0 0 38px rgba(255,154,203,.25);
+}
 
-  body{
-    margin:0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-    color:var(--text);
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:22px;
-    background:
-      radial-gradient(900px 600px at 15% 15%, rgba(255,77,109,.18), transparent 60%),
-      radial-gradient(900px 600px at 85% 70%, rgba(108,99,255,.16), transparent 60%),
-      linear-gradient(160deg, var(--bg1), var(--bg2));
-    overflow-x:hidden;
-  }
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(900px 600px at 18% 20%, rgba(255,79,163,.28), transparent 60%),
+    radial-gradient(900px 600px at 82% 70%, rgba(255,154,203,.20), transparent 60%),
+    linear-gradient(160deg, #07000f, #12001a);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  overflow-x:hidden;
+}
 
-  .wrap{
-    width:min(820px, 100%);
-  }
+.wrap{ width:min(860px,100%); }
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:26px;
+  padding:26px;
+  text-align:center;
+  box-shadow:0 25px 70px rgba(0,0,0,.5);
+  backdrop-filter: blur(12px);
+  position:relative;
+}
 
-  .card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:22px;
-    padding:22px;
-    box-shadow:0 18px 55px rgba(0,0,0,.45);
-    backdrop-filter: blur(10px);
-    text-align:center;
-  }
+section{ display:none; }
+section.active{ display:block; }
 
-  section{ display:none; }
-  section.active{ display:block; }
+h1,h2{ margin:10px 0; }
+.sub{ color:var(--muted); line-height:1.6; margin:10px 0 0; }
 
-  .title{
-    margin:10px 0 0;
-    font-size:28px;
-    letter-spacing:.2px;
-  }
-  .sub{
-    margin:10px 0 0;
-    color:var(--muted);
-    line-height:1.6;
-  }
+img,video{
+  max-width:92%;
+  border-radius:20px;
+  margin:18px auto 10px;
+  display:block;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow: 0 16px 45px rgba(0,0,0,.35);
+  background:#000;
+}
+video{ max-height:70vh; }
 
-  img, video{
-    width:min(92%, 720px);
-    border-radius:18px;
-    margin:18px auto 12px;
-    display:block;
-    border:1px solid rgba(255,255,255,.10);
-    background:#000;
-  }
-  video{ max-height:70vh; }
+input{
+  padding:16px 16px;
+  font-size:20px;
+  border-radius:18px;
+  border:2px solid var(--pink);
+  background:rgba(0,0,0,.25);
+  color:white;
+  text-align:center;
+  width:min(320px, 90%);
+  letter-spacing:3px;
+  font-weight:900;
+  outline:none;
+  box-shadow: var(--glow);
+}
+input::placeholder{ color:rgba(255,255,255,.5); letter-spacing:0; font-weight:700; }
 
-  input{
-    width:min(420px, 90%);
-    padding:14px 14px;
-    font-size:16px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,.16);
-    background:rgba(0,0,0,.25);
-    color:white;
-    outline:none;
-    margin-top:14px;
-  }
-  input::placeholder{ color:rgba(255,255,255,.45); }
+.row{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
 
-  .row{
-    display:flex;
-    gap:12px;
-    justify-content:center;
-    align-items:center;
-    flex-wrap:wrap;
-    margin-top:16px;
-  }
+button{
+  padding:14px 22px;
+  font-size:16px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-weight:950;
+  color:white;
+  background:linear-gradient(135deg,var(--pink),var(--pink2));
+  box-shadow: var(--glow);
+  transition: transform .12s ease, filter .12s ease;
+}
+button:hover{ filter:brightness(1.05); transform: translateY(-1px); }
+button:active{ transform: scale(.98); }
 
-  button{
-    border:none;
-    cursor:pointer;
-    font-weight:900;
-    border-radius:16px;
-    padding:12px 18px;
-    font-size:16px;
-    color:white;
-    transition: transform .12s ease, filter .12s ease;
-  }
-  button:active{ transform: scale(.98); }
+.btnGhost{
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.20);
+  box-shadow:none;
+}
 
-  .primary{
-    background: linear-gradient(135deg, var(--accent), #ff7aa2);
-  }
-  .secondary{
-    background: rgba(255,255,255,.12);
-    border:1px solid rgba(255,255,255,.18);
-  }
-  .next{
-    background: linear-gradient(135deg, var(--accent2), #8a83ff);
-  }
+.pill{
+  display:inline-block;
+  margin-top:12px;
+  padding:9px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(255,255,255,.07);
+  color:rgba(255,255,255,.82);
+  font-size:13px;
+}
 
-  .pill{
-    display:inline-block;
-    margin-top:10px;
-    padding:8px 12px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.16);
-    background:rgba(255,255,255,.06);
-    color:rgba(255,255,255,.75);
-    font-size:13px;
-  }
+.error{
+  margin-top:12px;
+  color:#ffd0e4;
+  font-weight:950;
+}
 
-  .error{
-    margin-top:10px;
-    color:#ffb3b3;
-    font-weight:800;
-  }
+/* Glow pulse */
+.pulse{
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{ box-shadow: var(--glow); }
+  50%{ box-shadow: 0 0 26px rgba(255,79,163,.65), 0 0 50px rgba(255,154,203,.35); }
+}
 
-  /* Aya Card */
-  .ayaBox{
-    text-align:left;
-    line-height:1.75;
-    border-radius:18px;
-    padding:16px;
-    border:1px solid rgba(255,255,255,.16);
-    background:rgba(0,0,0,.22);
-    margin-top:14px;
-  }
-  .ayaTitle{
-    margin:0;
-    font-size:18px;
-    font-weight:900;
-  }
-  .ar{
-    direction:rtl;
-    text-align:right;
-    font-size:20px;
-    margin:10px 0 8px;
-    opacity:.95;
-  }
-  .muted{
-    color:rgba(255,255,255,.70);
-    font-size:14px;
-  }
+/* Hearts layers */
+#heartLayer, #rainLayer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:9999;
+}
 
-  /* Nein Button: bewegt sich */
-  #noBtn{
-    position:relative;
-  }
+.heart{
+  position:absolute;
+  font-size:22px;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+  animation: floatUp 1.4s ease-out forwards;
+}
+@keyframes floatUp{
+  from{ opacity:0; transform: translateY(0) scale(.8); }
+  15%{ opacity:1; }
+  to{ opacity:0; transform: translateY(-180px) scale(1.35); }
+}
 
-  /* Herz-Animation Layer */
-  .heartLayer{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:9999;
-  }
-  .heart{
-    position:absolute;
-    font-size:22px;
-    animation: floatUp 1.4s ease-out forwards;
-    filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
-  }
-  @keyframes floatUp{
-    from{ transform: translateY(0) scale(.9); opacity:0; }
-    15%{ opacity:1; }
-    to{ transform: translateY(-160px) scale(1.35); opacity:0; }
-  }
+.rainHeart{
+  position:absolute;
+  top:-40px;
+  font-size:18px;
+  opacity:.9;
+  animation: fall linear forwards;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+}
+@keyframes fall{
+  to{ transform: translateY(calc(100vh + 80px)); opacity:0; }
+}
 
-  /* Fade */
-  .fade{
-    animation: fadeIn .55s ease;
-  }
-  @keyframes fadeIn{
-    from{ opacity:0; transform: translateY(10px); }
-    to{ opacity:1; transform:none; }
-  }
+/* tiny success text */
+#notifyMsg{
+  margin-top:12px;
+  font-weight:950;
+}
 </style>
 </head>
 
 <body>
-<div class="heartLayer" id="heartLayer"></div>
+<div id="heartLayer"></div>
+<div id="rainLayer"></div>
 
 <div class="wrap">
   <div class="card">
 
-    <!-- 0) Rätsel -->
-    <section id="s0" class="active fade">
-      <h1 class="title">Wie ist mein Spitzname bei dir?</h1>
-      <input id="answer" placeholder="Antwort eingeben…" autocomplete="off" />
+    <!-- 0) Geheimnis-Code -->
+    <section id="s0" class="active">
+      <h1 class="pulse">🔐 Geheimnis</h1>
+      <p class="sub"><b>Gib meinen Geburtstag ein</b></p>
+      <input id="secret" placeholder="TTMMJJJJ" inputmode="numeric" />
       <div class="row">
-        <button class="next" onclick="check()">kannst hier auch mit faust schlagen➜</button>
+        <button onclick="checkSecret()">Öffnen ❤️</button>
       </div>
-      <div id="msg" class="error"></div>
-      <div class="pill">Kein Tipp 😉</div>
+      <div id="secretMsg" class="error"></div>
+      <div class="pill">Hinweis: Bei 💋/🤗 Klick wird er benachrichtigt.</div>
     </section>
 
     <!-- 1) Bild 1 -->
-    <section id="s1" class="fade">
-      <img src="1.jpg" alt="Bild 1" />
+    <section id="s1">
+      <img src="1.jpg" alt="Bild 1">
       <p class="sub" style="font-size:18px;">
         <b>Ist das dein Ernst?</b><br>
-        Yar ze kale… egal.<br><br>
-        Esel ist eine beleidigung bei uns also bei uns heißt es Khar 
-        und steht für Dumm und wenn man sich daneben benimmt<br>
-        hmmmmmm : <br>
-        aber heute ist ja dein Tag ma baby ❤️ lets goooo
+        Heute ist dein Tag ma baby ❤️ lets goooo
       </p>
       <div class="row">
-        <button class="next" onclick="next(2)">du wieder schon heide : drück mal  ➜</button>
+        <button onclick="next(2)">Weiter ➜</button>
       </div>
     </section>
 
-    <!-- 1b) Video 1 -->
-    <section id="s2" class="fade">
+    <!-- 2) Video 1 -->
+    <section id="s2">
       <video src="video1.mp4" controls playsinline></video>
       <p class="sub">🤍</p>
       <div class="row">
-        <button class="next" onclick="next(3)">hier lang ma lady🤍 ➜</button>
+        <button onclick="next(3)">Weiter ➜</button>
       </div>
     </section>
 
-    <!-- 2) Bild 2 + Frage -->
-    <section id="s3" class="fade">
-      <img src="2.jpg" alt="Bild 2" />
-      <h2 class="title" style="font-size:26px;">Liebst du mich? ❤️</h2>
-
-      <div class="row" style="margin-top:18px; position:relative;">
-        <button class="primary" onclick="love()">Ja ❤️</button>
-        <button class="secondary" id="noBtn" type="button">Nein 🙈</button>
+    <!-- 3) Liebst du mich -->
+    <section id="s3">
+      <img src="2.jpg" alt="Bild 2">
+      <h2>Liebst du mich? ❤️</h2>
+      <div class="row">
+        <button onclick="loveYes()">Ja ❤️</button>
+        <button class="btnGhost" id="noBtn" type="button">Nein 🙈</button>
       </div>
-      <div class="pill">„Nein“ ist heute unmöglich dududududududu wolltest du nein drücekn 🤬</div>
-    </section> 
+      <div class="pill">„Nein“ ist heute unmöglich 😄</div>
+    </section>
 
-    <!-- 3) Bild 3 -->
-    <section id="s4" class="fade">
-      <img src="3.jpg" alt="Bild 3" />
-      <p class="sub" style="font-size:20px; font-weight:900; color:white;">
-        Ja ich weiß weil ich das beste binnnnn heheheheheh😎🤍 warte das beste oder der Bester achh egal 😁
+    <!-- 4) Bild 3 -->
+    <section id="s4">
+      <img src="3.jpg" alt="Bild 3">
+      <p class="sub" style="font-size:20px; font-weight:950;">
+        Ja ich weiß weil ich das beste binnnnn heheheheheh 😎🤍
       </p>
       <div class="row">
-        <button class="next" onclick="goAya()">mit deiner mini finger hier drücken ➜</button>
+        <button onclick="goAya()">Weiter ➜</button>
       </div>
     </section>
 
-    <!-- 4) Aya (allein, ruhig) -->
-    <section id="s5" class="fade">
-      <div class="ayaBox">
-        <p class="ayaTitle">Qur’an – Ār-Rūm 30:21</p>
-        <div class="ar">
-          وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا
-          لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً
-        </div>
-        <p class="muted">
-          Und zu Seinen Zeichen gehört, dass Er euch aus euch selbst Partner erschuf,
-          damit ihr bei ihnen Ruhe findet; und Er setzte zwischen euch Liebe und
-          Barmherzigkeit.
-        </p>
-        <p class="muted">Audio startet hier falls du hören willst :).</p>
-      </div>
-
+    <!-- 5) Aya -->
+    <section id="s5">
+      <h2>Qur’an – Ār-Rūm 30:21</h2>
+      <p style="direction:rtl; font-size:20px; line-height:2; margin:10px 0 6px;">
+        وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا
+        لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً
+      </p>
+      <p class="sub">
+        Und zu Seinen Zeichen gehört, dass Er euch aus euch selbst Partner erschuf,
+        damit ihr bei ihnen Ruhe findet; und Er setzte zwischen euch Liebe und Barmherzigkeit.
+      </p>
       <audio id="ayah" src="surah.mp3" controls></audio>
-
       <div class="row">
-        <button class="next" onclick="stopAyaAndNext()">Dilimin hier lang ❤️ ➜</button>
+        <button onclick="stopAyaAndNext()">Weiter ➜</button>
       </div>
     </section>
 
-    <!-- 5) Bild 4 + Text -->
-    <section id="s6" class="fade">
-      <img src="4.jpg" alt="Bild 4" />
+    <!-- 6) Bild 4 -->
+    <section id="s6">
+      <img src="4.jpg" alt="Bild 4">
       <p class="sub" style="text-align:left; max-width:720px; margin:0 auto; line-height:1.75;">
         Salam Fetty,<br><br>
-        Alles gute zum Geburtstag Gulimin🌷 🤍
-
-    
-    leider kann ich nicht bei dir sein,
-    da wir beide gerade prüfungsphasen haben aber inshallah
-    holen wir vieles nach und sag deine Mama endlich 
-    es wird nie einen perfekten zeitpunkt geben. 
-    Habe Twakkul inshallah Allah erleichtert uns alles. 
-
-
-        
-        Möge Allah dich beschützen egal wo du bist. Ich mache für uns immer dua dass wir es in diesseits und jenseits leicht haben
-        und ich bin Allah dankbar für dich denn unsre Prophet Mohammed ﷺ sagte die Welt ist nur ein Übergang zum ewigen Leben,
-        und die beste Voraussetzung dazu ist eine gütige Frau. Alhamdulliah wir schaffen es wenn du nicht viel wert auf diese Welt
-        legen wirst und mit Sabr und schöner Geduld.<br><br>
-        🤍
+        Alles gute zum Geburtstag Gulimin🌷 🤍<br><br>
+        Möge Allah dich beschützen egal wo du bist. Ich mache für uns immer dua dass wir es in diesseits und jenseits leicht haben…
       </p>
+
       <div class="row">
-        <button class="next" onclick="next(7)"> mue Damlicka 🤍 hier bitte➜</button>
+        <button onclick="next(7)">Weiter ➜</button>
       </div>
     </section>
 
-    <!-- 6) Abschiedsvideo -->
-    <section id="s7" class="fade">
+    <!-- 7) Abschied -->
+    <section id="s7">
       <video src="video2.mp4" controls playsinline></video>
-      <p class="sub" style="font-size:20px; font-weight:900;">Ich liebe dich. Ende. ❤️</p>
+      <h2>Ich liebe dich. Ende. ❤️</h2>
 
       <div class="row">
-        <button class="secondary" onclick="shareWA()">📲 WhatsApp teilen</button>
-        <button class="secondary" onclick="copyLink()">🔗 Link kopieren</button>
+        <button class="btnGhost" onclick="shareWA()">📲 WhatsApp teilen</button>
+        <button class="btnGhost" onclick="copyLink()">🔗 Link kopieren</button>
+        <button onclick="next(8)">💋🤗 Geheim-Aktion</button>
+      </div>
+    </section>
+
+    <!-- 8) Aktionen (E-Mail) -->
+    <section id="s8">
+      <h2>💋🤗 Geheim-Aktion</h2>
+      <p class="sub">Wähle eine Option. (ich werde benachrichtigt.)</p>
+
+      <div class="row">
+        <button onclick="sendAction('KÜSSEN 💋')">💋 Küssen </button>
+        <button onclick="sendAction('UMARMEN 🤗')">🤗 Umarmen </button>
+        <button class="btnGhost" onclick="funAction()">🥊 Boxen oder Schlagen</button>
+      </div>
+
+      <div id="notifyMsg" class="pill"></div>
+
+      <div class="row">
+        <button class="btnGhost" onclick="next(7)">Zurück</button>
       </div>
     </section>
 
@@ -326,84 +302,164 @@
 </div>
 
 <script>
+/* ========= SETTINGS ========= */
+const SECRET_BDAY = "02.02.2003";
+const FORM_URL = "https://formspree.io/f/maqdwjwn";
+
+/* ========= Navigation ========= */
 function next(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  const el = document.getElementById("s"+n);
-  el.classList.add("active");
+  document.getElementById("s"+n).classList.add("active");
 }
 
-function check(){
-  const v = document.getElementById("answer").value.toLowerCase().trim();
-  if(v === "eşek" || v === "esek"){
-    document.getElementById("msg").innerText = "";
+/* ========= Secret check ========= */
+function checkSecret(){
+  const v = (document.getElementById("secret").value || "").trim();
+  const msg = document.getElementById("secretMsg");
+  if(v === SECRET_BDAY){
+    msg.textContent = "";
     next(1);
-  }else{
-    document.getElementById("msg").innerText = "Nope 😄";
+  } else {
+    msg.textContent = "❌ Falscher Code 😄";
   }
 }
 
-/* Herzen-Effekt bei "Ja" */
-function burstHearts(){
+/* ========= Hearts & Sound ========= */
+function playPop(){
+  try{
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+    o.type = "sine";
+    o.frequency.value = 740;
+    g.gain.value = 0.0001;
+    o.connect(g); g.connect(ac.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.06, ac.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.18);
+    o.stop(ac.currentTime + 0.20);
+  }catch(e){}
+}
+
+function burstHearts(count=18){
   const layer = document.getElementById("heartLayer");
   const cx = window.innerWidth / 2;
   const cy = window.innerHeight / 2;
 
-  for(let i=0;i<18;i++){
+  for(let i=0;i<count;i++){
     const h = document.createElement("div");
     h.className = "heart";
     h.textContent = "❤️";
-
-    const dx = (Math.random()*240 - 120);
-    const dy = (Math.random()*60 - 30);
-
+    const dx = (Math.random()*260 - 130);
+    const dy = (Math.random()*80 - 40);
     h.style.left = (cx + dx) + "px";
     h.style.top  = (cy + dy) + "px";
-    h.style.fontSize = (18 + Math.random()*18) + "px";
+    h.style.fontSize = (18 + Math.random()*20) + "px";
     h.style.animationDuration = (1.0 + Math.random()*0.8) + "s";
     layer.appendChild(h);
-
     setTimeout(()=>h.remove(), 1800);
   }
 }
 
-function love(){
-  burstHearts();
+function heartRain(ms=1200){
+  const layer = document.getElementById("rainLayer");
+  const start = Date.now();
+
+  function spawn(){
+    const h = document.createElement("div");
+    h.className = "rainHeart";
+    h.textContent = Math.random() < 0.7 ? "💗" : "❤️";
+    h.style.left = (Math.random()*window.innerWidth) + "px";
+    const dur = 900 + Math.random()*900;
+    h.style.animationDuration = dur + "ms";
+    layer.appendChild(h);
+    setTimeout(()=>h.remove(), dur+100);
+  }
+
+  const id = setInterval(()=>{
+    spawn(); spawn();
+    if(Date.now() - start > ms) clearInterval(id);
+  }, 120);
+}
+
+/* ========= Love flow ========= */
+function loveYes(){
+  playPop();
+  burstHearts(22);
+  heartRain(900);
   setTimeout(()=>next(4), 250);
 }
 
-/* Nein läuft weg */
+/* ========= No button runs away ========= */
 const noBtn = document.getElementById("noBtn");
 function moveNo(){
-  const x = Math.random()*260 - 130; // -130..+130
-  const y = Math.random()*140 - 70;  // -70..+70
+  const x = Math.random()*280 - 140;
+  const y = Math.random()*160 - 80;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 }
 noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("click", (e)=>{ e.preventDefault(); moveNo(); });
 noBtn.addEventListener("touchstart", (e)=>{ e.preventDefault(); moveNo(); }, {passive:false});
 
-/* Aya: erst hier starten */
+/* ========= Aya play only here ========= */
 function goAya(){
   next(5);
   const a = document.getElementById("ayah");
   a.currentTime = 0;
   a.play().catch(()=>{});
 }
-
 function stopAyaAndNext(){
   const a = document.getElementById("ayah");
-  a.pause();
-  a.currentTime = 0;
+  a.pause(); a.currentTime = 0;
   next(6);
 }
 
-/* Share */
+/* ========= Email notify (Küssen/Umarmen) ========= */
+async function sendAction(action){
+  const msg = document.getElementById("notifyMsg");
+  msg.textContent = "Sende…";
+
+  playPop();
+  burstHearts(14);
+  heartRain(900);
+
+  const subject = `Geheimnis: Sie will ${action}`;
+  const text =
+    `Sie hat geklickt: ${action}\n` +
+    `Zeit: ${new Date().toLocaleString("de-DE")}\n` +
+    `Seite: ${location.href.split("#")[0]}\n`;
+
+  try{
+    await fetch(FORM_URL, {
+      method: "POST",
+      headers: { "Content-Type":"application/json", "Accept":"application/json" },
+      body: JSON.stringify({
+        _subject: subject,
+        message: text,
+        action
+      })
+    });
+    msg.textContent = `✅ Gesendet: ${action}`;
+  }catch(e){
+    msg.textContent = "❌ Konnte nicht senden (Netz / Formspree?)";
+  }
+}
+
+/* Boxen = nur Spaß, keine Email */
+function funAction(){
+  playPop();
+  burstHearts(10);
+  heartRain(700);
+  const msg = document.getElementById("notifyMsg");
+  msg.textContent = "🥊 Aua 😄 (nur Spaß)";
+}
+
+/* ========= Share ========= */
 function shareWA(){
   const url = location.href.split("#")[0];
   const text = `🎁 Schau mal: ${url} ❤️`;
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
 }
-
 async function copyLink(){
   const url = location.href.split("#")[0];
   try{
@@ -417,4 +473,3 @@ async function copyLink(){
 
 </body>
 </html>
-
