@@ -1,182 +1,408 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Für Dich ❤️</title>
 
 <style>
-body{
-  margin:0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background:#000;
-  color:#fff;
-  text-align:center;
-}
+  :root{
+    --bg1:#07070d;
+    --bg2:#0d0b18;
+    --card:rgba(255,255,255,.06);
+    --border:rgba(255,255,255,.14);
+    --text:rgba(255,255,255,.92);
+    --muted:rgba(255,255,255,.72);
+    --accent:#ff4d6d;
+    --accent2:#6c63ff;
+  }
 
-section{
-  display:none;
-  min-height:100vh;
-  padding:30px 20px;
-  box-sizing:border-box;
-}
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:22px;
+    background:
+      radial-gradient(900px 600px at 15% 15%, rgba(255,77,109,.18), transparent 60%),
+      radial-gradient(900px 600px at 85% 70%, rgba(108,99,255,.16), transparent 60%),
+      linear-gradient(160deg, var(--bg1), var(--bg2));
+    overflow-x:hidden;
+  }
 
-section.active{ display:block; }
+  .wrap{
+    width:min(820px, 100%);
+  }
 
-img, video{
-  max-width:90%;
-  border-radius:14px;
-  margin:20px 0;
-}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:22px;
+    box-shadow:0 18px 55px rgba(0,0,0,.45);
+    backdrop-filter: blur(10px);
+    text-align:center;
+  }
 
-button{
-  padding:12px 26px;
-  font-size:18px;
-  border-radius:25px;
-  border:none;
-  cursor:pointer;
-  background:#ff4d6d;
-  color:white;
-}
+  section{ display:none; }
+  section.active{ display:block; }
 
-button.alt{
-  background:#555;
-}
+  .title{
+    margin:10px 0 0;
+    font-size:28px;
+    letter-spacing:.2px;
+  }
+  .sub{
+    margin:10px 0 0;
+    color:var(--muted);
+    line-height:1.6;
+  }
 
-input{
-  padding:12px;
-  font-size:18px;
-  border-radius:10px;
-  border:none;
-  width:200px;
-  text-align:center;
-}
+  img, video{
+    width:min(92%, 720px);
+    border-radius:18px;
+    margin:18px auto 12px;
+    display:block;
+    border:1px solid rgba(255,255,255,.10);
+    background:#000;
+  }
+  video{ max-height:70vh; }
 
-.fade{
-  animation:fadeIn 0.6s ease;
-}
+  input{
+    width:min(420px, 90%);
+    padding:14px 14px;
+    font-size:16px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(0,0,0,.25);
+    color:white;
+    outline:none;
+    margin-top:14px;
+  }
+  input::placeholder{ color:rgba(255,255,255,.45); }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(10px);}
-  to{opacity:1; transform:none;}
-}
+  .row{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-top:16px;
+  }
 
-.hearts{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  font-size:30px;
-  animation:pop 1s ease forwards;
-}
+  button{
+    border:none;
+    cursor:pointer;
+    font-weight:900;
+    border-radius:16px;
+    padding:12px 18px;
+    font-size:16px;
+    color:white;
+    transition: transform .12s ease, filter .12s ease;
+  }
+  button:active{ transform: scale(.98); }
 
-@keyframes pop{
-  from{opacity:0; transform:scale(0.5);}
-  to{opacity:1; transform:scale(1.2);}
-}
+  .primary{
+    background: linear-gradient(135deg, var(--accent), #ff7aa2);
+  }
+  .secondary{
+    background: rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.18);
+  }
+  .next{
+    background: linear-gradient(135deg, var(--accent2), #8a83ff);
+  }
+
+  .pill{
+    display:inline-block;
+    margin-top:10px;
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.06);
+    color:rgba(255,255,255,.75);
+    font-size:13px;
+  }
+
+  .error{
+    margin-top:10px;
+    color:#ffb3b3;
+    font-weight:800;
+  }
+
+  /* Aya Card */
+  .ayaBox{
+    text-align:left;
+    line-height:1.75;
+    border-radius:18px;
+    padding:16px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(0,0,0,.22);
+    margin-top:14px;
+  }
+  .ayaTitle{
+    margin:0;
+    font-size:18px;
+    font-weight:900;
+  }
+  .ar{
+    direction:rtl;
+    text-align:right;
+    font-size:20px;
+    margin:10px 0 8px;
+    opacity:.95;
+  }
+  .muted{
+    color:rgba(255,255,255,.70);
+    font-size:14px;
+  }
+
+  /* Nein Button: bewegt sich */
+  #noBtn{
+    position:relative;
+  }
+
+  /* Herz-Animation Layer */
+  .heartLayer{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:9999;
+  }
+  .heart{
+    position:absolute;
+    font-size:22px;
+    animation: floatUp 1.4s ease-out forwards;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+  }
+  @keyframes floatUp{
+    from{ transform: translateY(0) scale(.9); opacity:0; }
+    15%{ opacity:1; }
+    to{ transform: translateY(-160px) scale(1.35); opacity:0; }
+  }
+
+  /* Fade */
+  .fade{
+    animation: fadeIn .55s ease;
+  }
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform:none; }
+  }
 </style>
 </head>
 
 <body>
+<div class="heartLayer" id="heartLayer"></div>
 
-<!-- 0 RÄTSEL -->
-<section id="s0" class="active fade">
-  <h2>Wie ist mein Spitzname bei dir?</h2>
-  <input id="answer" placeholder="Antwort eingeben">
-  <br><br>
-  <button onclick="check()">Weiter</button>
-  <p id="msg"></p>
-</section>
+<div class="wrap">
+  <div class="card">
 
-<!-- 1 BILD 1 -->
-<section id="s1" class="fade">
-  <img src="1.jpg">
-  <p>
-    Ist das dein Ernst?<br>
-    Yar ze kale… egal.<br>
-    Ein Esel macht nicht „iiiiiii AAAAAAA“<br>
-    sondern:
-  </p>
-  <p>👉 guck mal Video als Beweis</p>
-  <button onclick="next(2)">Weiter</button>
-</section>
+    <!-- 0) Rätsel -->
+    <section id="s0" class="active fade">
+      <h1 class="title">Wie ist mein Spitzname bei dir?</h1>
+      <input id="answer" placeholder="Antwort eingeben…" autocomplete="off" />
+      <div class="row">
+        <button class="next" onclick="check()">Weiter ➜</button>
+      </div>
+      <div id="msg" class="error"></div>
+      <div class="pill">Kein Tipp 😉</div>
+    </section>
 
-<!-- 1b VIDEO 1 -->
-<section id="s2" class="fade">
-  <video src="video1.mp4" controls></video>
-  <p>Aber jetzt genug gelacht und Spaß.</p>
-  <button onclick="next(3)">Weiter</button>
-</section>
+    <!-- 1) Bild 1 -->
+    <section id="s1" class="fade">
+      <img src="1.jpg" alt="Bild 1" />
+      <p class="sub" style="font-size:18px;">
+        <b>Ist das dein Ernst?</b><br>
+        Yar ze kale… egal.<br><br>
+        Ein Esel macht nicht „iiiiiii AAAAAAA“<br>
+        sondern:<br>
+        👉 guck mal Video als Beweis
+      </p>
+      <div class="row">
+        <button class="next" onclick="next(2)">Weiter ➜</button>
+      </div>
+    </section>
 
-<!-- 2 BILD 2 -->
-<section id="s3" class="fade">
-  <img src="2.jpg">
-  <h2>Liebst du mich? ❤️</h2>
-  <button onclick="love()">Ja</button>
-  <button class="alt" onclick="alert('Falsche Antwort 😄')">Nein</button>
-</section>
+    <!-- 1b) Video 1 -->
+    <section id="s2" class="fade">
+      <video src="video1.mp4" controls playsinline></video>
+      <p class="sub">Aber jetzt genug gelacht und Spaß.</p>
+      <div class="row">
+        <button class="next" onclick="next(3)">Weiter ➜</button>
+      </div>
+    </section>
 
-<!-- 3 BILD 3 -->
-<section id="s4" class="fade">
-  <img src="3.jpg">
-  <p><b>Ja ich weiß weil ich das beste binnnnn heheheheheh</b></p>
-  <button onclick="next(5)">Weiter</button>
-</section>
+    <!-- 2) Bild 2 + Frage -->
+    <section id="s3" class="fade">
+      <img src="2.jpg" alt="Bild 2" />
+      <h2 class="title" style="font-size:26px;">Liebst du mich? ❤️</h2>
 
-<!-- 4 AYA -->
-<section id="s5" class="fade">
-  <h3>﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا﴾</h3>
-  <p>
-    Und zu Seinen Zeichen gehört, dass Er für euch aus euch selbst
-    Gattinnen erschaffen hat, damit ihr bei ihnen Ruhe findet…
-  </p>
-  <audio id="ayah" src="surah.mp3" controls autoplay></audio>
-  <br><br>
-  <button onclick="next(6)">Weiter</button>
-</section>
+      <div class="row" style="margin-top:18px; position:relative;">
+        <button class="primary" onclick="love()">Ja ❤️</button>
+        <button class="secondary" id="noBtn" type="button">Nein 🙈</button>
+      </div>
+      <div class="pill">„Nein“ ist heute unmöglich 😄</div>
+    </section>
 
-<!-- 5 BILD 4 -->
-<section id="s6" class="fade">
-  <img src="4.jpg">
-  <p>
-    Ya Allah, schenke uns Geduld, Liebe und Barmherzigkeit.<br>
-    Lass uns ein Zuhause füreinander sein.
-  </p>
-  <button onclick="next(7)">Weiter</button>
-</section>
+    <!-- 3) Bild 3 -->
+    <section id="s4" class="fade">
+      <img src="3.jpg" alt="Bild 3" />
+      <p class="sub" style="font-size:20px; font-weight:900; color:white;">
+        Ja ich weiß weil ich das beste binnnnn heheheheheh
+      </p>
+      <div class="row">
+        <button class="next" onclick="goAya()">Weiter ➜</button>
+      </div>
+    </section>
 
-<!-- 6 ABSCHIED -->
-<section id="s7" class="fade">
-  <video src="video2.mp4" controls></video>
-  <h2>Ich liebe dich. Ende. ❤️</h2>
-</section>
+    <!-- 4) Aya (allein, ruhig) -->
+    <section id="s5" class="fade">
+      <div class="ayaBox">
+        <p class="ayaTitle">Qur’an – Ār-Rūm 30:21</p>
+        <div class="ar">
+          وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا
+          لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً
+        </div>
+        <p class="muted">
+          Und zu Seinen Zeichen gehört, dass Er euch aus euch selbst Partner erschuf,
+          damit ihr bei ihnen Ruhe findet; und Er setzte zwischen euch Liebe und
+          Barmherzigkeit.
+        </p>
+        <p class="muted">Audio startet hier.</p>
+      </div>
+
+      <audio id="ayah" src="surah.mp3" controls></audio>
+
+      <div class="row">
+        <button class="next" onclick="stopAyaAndNext()">Weiter ➜</button>
+      </div>
+    </section>
+
+    <!-- 5) Bild 4 + Text -->
+    <section id="s6" class="fade">
+      <img src="4.jpg" alt="Bild 4" />
+      <p class="sub" style="text-align:left; max-width:720px; margin:0 auto; line-height:1.75;">
+        Salam Fetty,<br><br>
+        Möge Allah dich beschützen egal wo du bist. Ich mache für uns immer dua dass wir es in diesseits und jenseits leicht haben
+        und ich bin Allah dankbar für dich denn unsre Prophet Mohammed ﷺ sagte die Welt ist nur ein Übergang zum ewigen Leben,
+        und die beste Voraussetzung dazu ist eine gütige Frau. Alhamdulliah wir schaffen es wenn du nicht viel wert auf diese Welt
+        legen wirst und mit Sabr und schöner Geduld.<br><br>
+        🤍
+      </p>
+      <div class="row">
+        <button class="next" onclick="next(7)">Weiter ➜</button>
+      </div>
+    </section>
+
+    <!-- 6) Abschiedsvideo -->
+    <section id="s7" class="fade">
+      <video src="video2.mp4" controls playsinline></video>
+      <p class="sub" style="font-size:20px; font-weight:900;">Ich liebe dich. Ende. ❤️</p>
+
+      <div class="row">
+        <button class="secondary" onclick="shareWA()">📲 WhatsApp teilen</button>
+        <button class="secondary" onclick="copyLink()">🔗 Link kopieren</button>
+      </div>
+    </section>
+
+  </div>
+</div>
 
 <script>
 function next(n){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  document.getElementById("s"+n).classList.add("active");
+  const el = document.getElementById("s"+n);
+  el.classList.add("active");
 }
 
 function check(){
   const v = document.getElementById("answer").value.toLowerCase().trim();
   if(v === "eşek" || v === "esek"){
+    document.getElementById("msg").innerText = "";
     next(1);
   }else{
     document.getElementById("msg").innerText = "Nope 😄";
   }
 }
 
+/* Herzen-Effekt bei "Ja" */
+function burstHearts(){
+  const layer = document.getElementById("heartLayer");
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+
+  for(let i=0;i<18;i++){
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.textContent = "❤️";
+
+    const dx = (Math.random()*240 - 120);
+    const dy = (Math.random()*60 - 30);
+
+    h.style.left = (cx + dx) + "px";
+    h.style.top  = (cy + dy) + "px";
+    h.style.fontSize = (18 + Math.random()*18) + "px";
+    h.style.animationDuration = (1.0 + Math.random()*0.8) + "s";
+    layer.appendChild(h);
+
+    setTimeout(()=>h.remove(), 1800);
+  }
+}
+
 function love(){
-  const h = document.createElement("div");
-  h.className="hearts";
-  h.innerText="❤️ ❤️ ❤️";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),1000);
-  next(4);
+  burstHearts();
+  setTimeout(()=>next(4), 250);
+}
+
+/* Nein läuft weg */
+const noBtn = document.getElementById("noBtn");
+function moveNo(){
+  const x = Math.random()*260 - 130; // -130..+130
+  const y = Math.random()*140 - 70;  // -70..+70
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("click", (e)=>{ e.preventDefault(); moveNo(); });
+noBtn.addEventListener("touchstart", (e)=>{ e.preventDefault(); moveNo(); }, {passive:false});
+
+/* Aya: erst hier starten */
+function goAya(){
+  next(5);
+  const a = document.getElementById("ayah");
+  a.currentTime = 0;
+  a.play().catch(()=>{});
+}
+
+function stopAyaAndNext(){
+  const a = document.getElementById("ayah");
+  a.pause();
+  a.currentTime = 0;
+  next(6);
+}
+
+/* Share */
+function shareWA(){
+  const url = location.href.split("#")[0];
+  const text = `🎁 Schau mal: ${url} ❤️`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+}
+
+async function copyLink(){
+  const url = location.href.split("#")[0];
+  try{
+    await navigator.clipboard.writeText(url);
+    alert("✅ Link kopiert!");
+  }catch(e){
+    alert("Kopieren ging nicht. Link manuell kopieren: " + url);
+  }
 }
 </script>
 
 </body>
 </html>
-
- 
 
