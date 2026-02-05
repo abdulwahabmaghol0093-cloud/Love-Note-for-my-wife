@@ -1,471 +1,182 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Für Dich ❤️</title>
 
 <style>
-  :root{
-    --bg:#0b0b10;
-    --card:#161622;
-    --border:rgba(255,255,255,.14);
-    --accent:#ff4d6d;
-    --accent2:#6c63ff;
-  }
-  body{
-    margin:0;
-    background: radial-gradient(1200px 800px at 20% 10%, rgba(255,77,109,.18), transparent 55%),
-                radial-gradient(900px 700px at 80% 70%, rgba(108,99,255,.14), transparent 55%),
-                var(--bg);
-    color:#fff;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:22px;
-    overflow-x:hidden;
-  }
-  .card{
-    width:min(820px, 100%);
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:22px;
-    padding:22px;
-    text-align:center;
-    box-shadow:0 16px 50px rgba(0,0,0,.35);
-    position:relative;
-  }
-  .scene{
-    opacity:0;
-    transform: translateY(10px);
-    transition: opacity .35s ease, transform .35s ease;
-  }
-  .scene.show{
-    opacity:1;
-    transform: translateY(0);
-  }
-  .hidden{ display:none; }
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background:#000;
+  color:#fff;
+  text-align:center;
+}
 
-  img, video{
-    width:100%;
-    border-radius:16px;
-    margin:16px 0;
-    display:block;
-    border:1px solid rgba(255,255,255,.10);
-    background:#000;
-  }
-  video{ max-height:70vh; }
+section{
+  display:none;
+  min-height:100vh;
+  padding:30px 20px;
+  box-sizing:border-box;
+}
 
-  button, input{
-    padding:12px 18px;
-    font-size:16px;
-    font-weight:800;
-    border-radius:14px;
-    border:none;
-  }
-  button{ cursor:pointer; }
-  input{
-    width:100%;
-    box-sizing:border-box;
-    margin-top:10px;
-    background:#0f0f18;
-    color:#fff;
-    border:1px solid rgba(255,255,255,.18);
-    font-weight:700;
-  }
-  .notice{ opacity:.82; font-size:14px; margin:8px 0 0; }
-  .error{ color:#ffb4b4; }
+section.active{ display:block; }
 
-  .btnPrimary{ background:var(--accent2); color:#fff; width:100%; margin-top:10px; }
-  .btnNext{ background:var(--accent2); color:#fff; margin-top:12px; }
-  .btnYes{ background:var(--accent); color:#fff; }
+img, video{
+  max-width:90%;
+  border-radius:14px;
+  margin:20px 0;
+}
 
-  .buttons{
-    position:relative;
-    height:92px;
-    margin-top:18px;
-    border-radius:16px;
-    border:1px dashed rgba(255,255,255,.18);
-    background:rgba(255,255,255,.04);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:14px;
-    overflow:hidden;
-  }
-  #noBtn{
-    background:#444;
-    color:#fff;
-    position:absolute;
-  }
+button{
+  padding:12px 26px;
+  font-size:18px;
+  border-radius:25px;
+  border:none;
+  cursor:pointer;
+  background:#ff4d6d;
+  color:white;
+}
 
-  .translation{
-    text-align:left;
-    background:rgba(255,255,255,.06);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:14px;
-    margin-top:12px;
-    line-height:1.7;
-  }
-  .translation h3{ margin:0 0 8px; font-size:18px; }
-  .ar{
-    direction:rtl;
-    text-align:right;
-    font-size:20px;
-    line-height:2;
-    margin:10px 0;
-    opacity:.95;
-  }
+button.alt{
+  background:#555;
+}
 
-  .text{
-    text-align:left;
-    line-height:1.7;
-    font-size:16px;
-  }
+input{
+  padding:12px;
+  font-size:18px;
+  border-radius:10px;
+  border:none;
+  width:200px;
+  text-align:center;
+}
 
-  /* Confetti canvas */
-  #confetti{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:9999;
-  }
+.fade{
+  animation:fadeIn 0.6s ease;
+}
 
-  .shareRow{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    justify-content:center;
-    margin-top:12px;
-  }
-  .shareRow button{
-    background:rgba(255,255,255,.10);
-    color:#fff;
-    border:1px solid rgba(255,255,255,.18);
-  }
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:none;}
+}
+
+.hearts{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  font-size:30px;
+  animation:pop 1s ease forwards;
+}
+
+@keyframes pop{
+  from{opacity:0; transform:scale(0.5);}
+  to{opacity:1; transform:scale(1.2);}
+}
 </style>
 </head>
 
 <body>
 
-<canvas id="confetti" class="hidden"></canvas>
-
-<!-- 0) RÄTSEL – ohne Tipp -->
-<div class="card scene" id="s0">
+<!-- 0 RÄTSEL -->
+<section id="s0" class="active fade">
   <h2>Wie ist mein Spitzname bei dir?</h2>
-  <input id="riddleInput" placeholder="Antwort eingeben…" autocomplete="off" />
-  <button class="btnPrimary" id="riddleBtn">Weiter ➜</button>
-  <p class="notice error" id="riddleMsg"></p>
-</div>
+  <input id="answer" placeholder="Antwort eingeben">
+  <br><br>
+  <button onclick="check()">Weiter</button>
+  <p id="msg"></p>
+</section>
 
-<!-- 1) BILD 1 + SPASSTEXT -->
-<div class="card scene hidden" id="s1">
-  <img src="1.jpg" alt="Bild 1">
-  <p style="font-size:18px; line-height:1.6;">
-    <b>Ist das dein Ernst?</b><br>
-    Yar ze kale… egal.<br><br>
+<!-- 1 BILD 1 -->
+<section id="s1" class="fade">
+  <img src="1.jpg">
+  <p>
+    Ist das dein Ernst?<br>
+    Yar ze kale… egal.<br>
     Ein Esel macht nicht „iiiiiii AAAAAAA“<br>
-    sondern:<br>
-    👉 guck mal Video als Beweis
+    sondern:
   </p>
-  <button class="btnNext" id="toS2">Weiter ➜</button>
-</div>
+  <p>👉 guck mal Video als Beweis</p>
+  <button onclick="next(2)">Weiter</button>
+</section>
 
-<!-- 1b) VIDEO 1 (Beweis) -->
-<div class="card scene hidden" id="s2">
-  <video src="video1.mp4" controls playsinline></video>
-  <p class="notice">Aber jetzt genug gelacht und Spaß.</p>
-  <button class="btnNext" id="toS3">Weiter ➜</button>
-</div>
+<!-- 1b VIDEO 1 -->
+<section id="s2" class="fade">
+  <video src="video1.mp4" controls></video>
+  <p>Aber jetzt genug gelacht und Spaß.</p>
+  <button onclick="next(3)">Weiter</button>
+</section>
 
-<!-- 2) BILD 2 + FRAGE -->
-<div class="card scene hidden" id="s3">
-  <img src="2.jpg" alt="Bild 2">
+<!-- 2 BILD 2 -->
+<section id="s3" class="fade">
+  <img src="2.jpg">
   <h2>Liebst du mich? ❤️</h2>
+  <button onclick="love()">Ja</button>
+  <button class="alt" onclick="alert('Falsche Antwort 😄')">Nein</button>
+</section>
 
-  <div class="buttons" id="btnZone">
-    <button class="btnYes" id="yesBtn">Ja ❤️</button>
-    <button id="noBtn">Nein 🙈</button>
-  </div>
+<!-- 3 BILD 3 -->
+<section id="s4" class="fade">
+  <img src="3.jpg">
+  <p><b>Ja ich weiß weil ich das beste binnnnn heheheheheh</b></p>
+  <button onclick="next(5)">Weiter</button>
+</section>
 
-  <p class="notice">„Nein“ ist heute unmöglich 😄</p>
-</div>
-
-<!-- 3) BILD 3 + Satz -->
-<div class="card scene hidden" id="s4">
-  <img src="3.jpg" alt="Bild 3">
-  <p style="font-size:20px; font-weight:900;">
-    Ja ich weiß weil ich das beste binnnnn heheheheheh
+<!-- 4 AYA -->
+<section id="s5" class="fade">
+  <h3>﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا﴾</h3>
+  <p>
+    Und zu Seinen Zeichen gehört, dass Er für euch aus euch selbst
+    Gattinnen erschaffen hat, damit ihr bei ihnen Ruhe findet…
   </p>
-  <button class="btnNext" id="toS5">Weiter ➜</button>
-</div>
+  <audio id="ayah" src="surah.mp3" controls autoplay></audio>
+  <br><br>
+  <button onclick="next(6)">Weiter</button>
+</section>
 
-<!-- 4) AYA-SEITE (allein, ruhig) -->
-<div class="card scene hidden" id="s5">
-  <div class="translation">
-    <h3>Qur’an – Ār-Rūm 30:21</h3>
-    <div class="ar">
-      وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا
-      لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً ۚ
-      إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِقَوْمٍ يَتَفَكَّرُونَ
-    </div>
-    <p>
-      Zu Seinen Zeichen gehört, dass Er euch aus euch selbst Partner erschuf,
-      damit ihr bei ihnen Ruhe findet; und Er setzte zwischen euch Liebe und
-      Barmherzigkeit.
-    </p>
-    <p class="notice">Audio läuft sanft im Hintergrund.</p>
-  </div>
+<!-- 5 BILD 4 -->
+<section id="s6" class="fade">
+  <img src="4.jpg">
+  <p>
+    Ya Allah, schenke uns Geduld, Liebe und Barmherzigkeit.<br>
+    Lass uns ein Zuhause füreinander sein.
+  </p>
+  <button onclick="next(7)">Weiter</button>
+</section>
 
-  <audio id="surah" preload="auto">
-    <source src="surah.mp3" type="audio/mpeg">
-  </audio>
-
-  <div class="shareRow">
-    <button id="pauseSurah">⏸ Pause</button>
-    <button id="playSurah">▶️ Weiter</button>
-  </div>
-
-  <button class="btnNext" id="toS6">Weiter ➜</button>
-</div>
-
-<!-- 5) BILD 4 + TEXT -->
-<div class="card scene hidden" id="s6">
-  <img src="4.jpg" alt="Bild 4">
-  <div class="text">
-    <p><b>Salam Fetty,</b></p>
-
-    <p>
-      Alles gute zum Geburtstag Gulimin🌷
-
-    
-    leider kann ich nicht bei dir sein,
-    da wir beide gerade prüfungsphasen haben aber inshallah
-    holen wir vieles nach und sag deine Mama endlich 
-    es wird nie einen perfekten zeitpunkt geben. 
-    Habe Twakkul inshallah Allah erleichtert uns alles. 
-      
-      Möge Allah dich beschützen egal wo du bist.
-      Ich mache für uns immer dua dass wir es in diesseits und jenseits leicht haben
-      und ich bin Allah dankbar für dich. 🤍
-    </p>
-
-    <p>
-      Denn unser Prophet Mohammed ﷺ sagte sinngemäß:
-      Die Welt ist nur ein Übergang zum ewigen Leben.
-      Und die beste Voraussetzung dazu ist eine gütige Frau.
-      Alhamdulliah wir schaffen es wenn du nicht viel Wert auf diese Welt legst
-      und mit Sabr und schöner Geduld.
-    </p>
-
-    <p>Wir werden geprüft — aber gemeinsam bestehen wir. 🤍</p>
-  </div>
-
-  <button class="btnNext" id="toS7">Weiter ➜</button>
-</div>
-
-<!-- 6) ABSCHIEDSVIDEO + Ende -->
-<div class="card scene hidden" id="s7">
-  <video src="video2.mp4" controls playsinline></video>
-  <p style="font-size:20px; font-weight:900;">Ich liebe dich. Ende. ❤️</p>
-
-  <div class="shareRow">
-    <button id="shareWA">📲 WhatsApp teilen</button>
-    <button id="copyLink">🔗 Link kopieren</button>
-  </div>
-</div>
+<!-- 6 ABSCHIED -->
+<section id="s7" class="fade">
+  <video src="video2.mp4" controls></video>
+  <h2>Ich liebe dich. Ende. ❤️</h2>
+</section>
 
 <script>
-/* ====== CONFIG ====== */
-const RIDDLE_ANSWER = "eşek";
-
-/* ====== helpers ====== */
-function norm(s){
-  return (s||"").trim().toLowerCase().replace(/\s+/g," ");
-}
-function show(id){
-  const el = document.getElementById(id);
-  el.classList.remove("hidden");
-  requestAnimationFrame(()=> el.classList.add("show"));
-}
-function hide(id){
-  const el = document.getElementById(id);
-  el.classList.remove("show");
-  setTimeout(()=> el.classList.add("hidden"), 260);
-}
-function go(from, to){
-  hide(from);
-  setTimeout(()=> show(to), 280);
+function next(n){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById("s"+n).classList.add("active");
 }
 
-/* ====== start ====== */
-show("s0");
-
-/* ====== Rätsel ====== */
-const riddleInput = document.getElementById("riddleInput");
-const riddleBtn = document.getElementById("riddleBtn");
-const riddleMsg = document.getElementById("riddleMsg");
-
-function checkRiddle(){
-  const v = norm(riddleInput.value);
-  const ok = (v === norm(RIDDLE_ANSWER)) || (v === "esek");
-  if(ok){
-    riddleMsg.textContent = "";
-    go("s0","s1");
-  } else {
-    riddleMsg.textContent = "Nope 😄";
+function check(){
+  const v = document.getElementById("answer").value.toLowerCase().trim();
+  if(v === "eşek" || v === "esek"){
+    next(1);
+  }else{
+    document.getElementById("msg").innerText = "Nope 😄";
   }
 }
-riddleBtn.addEventListener("click", checkRiddle);
-riddleInput.addEventListener("keydown", (e)=>{ if(e.key==="Enter") checkRiddle(); });
 
-/* ====== Flow Buttons ====== */
-document.getElementById("toS2").addEventListener("click", ()=>go("s1","s2"));
-document.getElementById("toS3").addEventListener("click", ()=>go("s2","s3"));
-document.getElementById("toS5").addEventListener("click", ()=>go("s4","s5"));
-document.getElementById("toS6").addEventListener("click", ()=>go("s5","s6"));
-document.getElementById("toS7").addEventListener("click", ()=>go("s6","s7"));
-
-/* ====== Nein-Button weicht aus ====== */
-const noBtn = document.getElementById("noBtn");
-const btnZone = document.getElementById("btnZone");
-
-function moveNo(){
-  const zone = btnZone.getBoundingClientRect();
-  const btn = noBtn.getBoundingClientRect();
-  const maxX = Math.max(20, zone.width - btn.width - 20);
-  const maxY = Math.max(20, zone.height - btn.height - 20);
-  const x = 10 + Math.random()*maxX;
-  const y = 10 + Math.random()*maxY;
-  noBtn.style.left = x + "px";
-  noBtn.style.top  = y + "px";
+function love(){
+  const h = document.createElement("div");
+  h.className="hearts";
+  h.innerText="❤️ ❤️ ❤️";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),1000);
+  next(4);
 }
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("click", (e)=>{ e.preventDefault(); moveNo(); });
-noBtn.addEventListener("touchstart", (e)=>{ e.preventDefault(); moveNo(); }, {passive:false});
-
-/* ====== Confetti bei "Ja" ====== */
-const confettiCanvas = document.getElementById("confetti");
-const ctx = confettiCanvas.getContext("2d");
-let confetti = [];
-
-function resizeCanvas(){
-  confettiCanvas.width = window.innerWidth;
-  confettiCanvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-function burstConfetti(){
-  confettiCanvas.classList.remove("hidden");
-  confetti = [];
-  const N = 160;
-  for(let i=0;i<N;i++){
-    confetti.push({
-      x: window.innerWidth/2,
-      y: window.innerHeight/3,
-      vx: (Math.random()*2-1)*8,
-      vy: (Math.random()*-1)*10 - 6,
-      g: 0.25 + Math.random()*0.2,
-      r: 3 + Math.random()*4,
-      a: 1
-    });
-  }
-  function anim(){
-    ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
-    confetti.forEach(p=>{
-      p.vy += p.g;
-      p.x += p.vx;
-      p.y += p.vy;
-      p.a -= 0.012;
-      ctx.globalAlpha = Math.max(0, p.a);
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fill();
-    });
-    ctx.globalAlpha = 1;
-    confetti = confetti.filter(p=>p.a>0 && p.y < window.innerHeight+50);
-    if(confetti.length>0){
-      requestAnimationFrame(anim);
-    } else {
-      confettiCanvas.classList.add("hidden");
-    }
-  }
-  requestAnimationFrame(anim);
-}
-
-/* ====== Audio Fade ====== */
-function fadeTo(audio, targetVol, ms){
-  targetVol = Math.min(1, Math.max(0, targetVol));
-  const steps = Math.max(1, Math.floor(ms/40));
-  const delta = (targetVol - audio.volume)/steps;
-  let n = 0;
-  return new Promise(resolve=>{
-    const id = setInterval(()=>{
-      n++;
-      audio.volume = Math.min(1, Math.max(0, audio.volume + delta));
-      if(n>=steps){
-        audio.volume = targetVol;
-        clearInterval(id);
-        resolve();
-      }
-    }, 40);
-  });
-}
-
-/* ====== Ja -> Bild 3 ====== */
-const yesBtn = document.getElementById("yesBtn");
-yesBtn.addEventListener("click", ()=>{
-  burstConfetti();
-  go("s3","s4");
-});
-
-/* ====== Aya Audio Start beim Öffnen der Aya-Seite ====== */
-const surah = document.getElementById("surah");
-const pauseSurah = document.getElementById("pauseSurah");
-const playSurah = document.getElementById("playSurah");
-
-// Start nur wenn man wirklich auf Seite s5 kommt (klick-basiert, Browser erlaubt)
-document.getElementById("toS5").addEventListener("click", async ()=>{
-  try{
-    surah.volume = 0;
-    await surah.play();
-    await fadeTo(surah, 0.85, 1500);
-  }catch(e){}
-});
-
-pauseSurah.addEventListener("click", ()=> surah.pause());
-playSurah.addEventListener("click", ()=> surah.play());
-
-// Beim Weiter von Aya-Seite: Audio ausblenden
-document.getElementById("toS6").addEventListener("click", async ()=>{
-  try{
-    await fadeTo(surah, 0, 700);
-    surah.pause();
-    surah.currentTime = 0;
-  }catch(e){}
-});
-
-/* ====== Share ====== */
-document.getElementById("shareWA").addEventListener("click", ()=>{
-  const url = location.href.split("#")[0];
-  const text = `🎁 Schau mal: ${url} ❤️`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
-});
-
-document.getElementById("copyLink").addEventListener("click", async ()=>{
-  const url = location.href.split("#")[0];
-  try{
-    await navigator.clipboard.writeText(url);
-    alert("✅ Link kopiert!");
-  }catch(e){
-    alert("Kopieren ging nicht. Link manuell kopieren: " + url);
-  }
-});
 </script>
 
 </body>
 </html>
+
+ 
+
